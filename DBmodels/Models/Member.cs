@@ -10,15 +10,13 @@ namespace DBmodels.Models
 {
     public class Member
     {
-        [Key]
-        public int GroupMemberID { get; set; }
+        public int MemberId { get; set; }
+        public int ProjectId { get; set; }
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
 
-        [ForeignKey("User")]
-        public int UserID { get; set; }
-        public User User { get; set; }
-
-        [ForeignKey("Group")]
-        public int GroupID { get; set; }
-        public Group Group { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual User User { get; set; }
+        public virtual Role Role { get; set; }
     }
 }
