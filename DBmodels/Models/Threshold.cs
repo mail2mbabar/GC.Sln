@@ -10,9 +10,9 @@ namespace DBmodels.Models
         public int CriterionId { get; set; }
         public int Value { get; set; }
 
-        public virtual Project Project { get; set; }
-        public virtual Member Member { get; set; }
-        public virtual Criterion Criterion { get; set; }
+        public Project Project { get; set; }
+        public Member Member { get; set; }
+        public Criterion Criterion { get; set; }
 
     }
 }

@@ -15,9 +15,9 @@ namespace DBmodels.Models
         public int CriterionId2 { get; set; }
         public int Value { get; set; }
 
-        public virtual Project Project { get; set; }
-        public virtual Member Member { get; set; }
-        public virtual Criterion Criterion1 { get; set; }
-        public virtual Criterion Criterion2 { get; set; }
+        public Project Project { get; set; }
+        public Member Member { get; set; }
+        public Criterion Criterion1 { get; set; }
+        public Criterion Criterion2 { get; set; }
     }
 }

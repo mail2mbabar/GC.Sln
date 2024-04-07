@@ -19,9 +19,9 @@ namespace DBmodels.Models
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
         public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual ICollection<Member> Members { get; set; }
-        // Add other user properties as needed
+        public Role Role { get; set; }
+        public ICollection<Member> Members { get; set; }
+       
     }
 
 }

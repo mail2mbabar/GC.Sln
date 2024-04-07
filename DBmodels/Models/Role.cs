@@ -12,6 +12,6 @@ namespace DBmodels.Models
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }
