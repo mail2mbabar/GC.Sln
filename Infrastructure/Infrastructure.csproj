@@ -18,5 +18,9 @@
 	  </PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\DBmodels\DBmodels.csproj" />
+	</ItemGroup>
+
 
 </Project>

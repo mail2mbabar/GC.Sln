@@ -1,5 +1,5 @@
 ﻿using DBmodels.Models;
-using InfraStructuree.Repository.Interfaces;
+using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GC.Controllers

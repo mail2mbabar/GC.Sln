@@ -1,11 +1,11 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
-using InfraStructuree.Repository.Interfaces;
+using Infrastructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 
-namespace InfraStructuree.Repository.Implementations
+namespace Infrastructure.Repository.Implementations
 {
         public class CriterionRepository : ICriterionRepository
         {

@@ -2,7 +2,7 @@
 
 using DBmodels.Models;
 
-namespace InfraStructuree.Repository.Interfaces
+namespace Infrastructure.Repository.Interfaces
 {
     public interface IConstraintRepository
     {

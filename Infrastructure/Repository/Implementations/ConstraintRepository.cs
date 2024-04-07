@@ -1,9 +1,9 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
-using InfraStructuree.Repository.Interfaces;
+using Infrastructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace InfraStructuree.Repository.Implementations
+namespace Infrastructure.Repository.Implementations
 {
       public class ConstraintRepository : IConstraintRepository
         {

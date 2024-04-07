@@ -1,4 +1,5 @@
 using DBmodels.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services; // Define the services variable
@@ -10,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 ServiceModule.Register(services);
+services.AddDbContext<GcContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("YourConnectionString")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfraStructuree.Repository.Interfaces
+namespace Infrastructure.Repository.Interfaces
 {
     public interface IEvaluationRepository
     {
