@@ -1,5 +1,4 @@
-﻿
-namespace DBmodels.Models
+﻿namespace DBmodels.Models
 {
     public class Threshold
     {

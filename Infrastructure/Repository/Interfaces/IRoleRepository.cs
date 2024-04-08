@@ -1,4 +1,6 @@
-﻿using DBmodels.Models;
+﻿
+
+using DBmodels.Models;
 
 namespace Infrastructure.Repository.Interfaces
 {

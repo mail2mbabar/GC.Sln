@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DBmodels.Configuration;
-using DBmodels.Models;
 
 using System;
+using DBmodels.Models;
 
 [Route("api/[controller]")]
 [ApiController]

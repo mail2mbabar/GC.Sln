@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class OptionRepository : IOptionRepository
+    public class OptionRepository : IOptionRepository
         {
             private readonly GcContext _context;
 

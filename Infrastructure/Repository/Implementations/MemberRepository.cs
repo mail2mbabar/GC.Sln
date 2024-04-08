@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class MemberRepository : IMemberRepository
+    public class MemberRepository : IMemberRepository
         {
             private readonly GcContext _context;
 

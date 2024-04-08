@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DBmodels.Configuration
 {
-        public class GcContext : DbContext
+    public class GcContext : DbContext
         {
             public GcContext(DbContextOptions<GcContext> options) : base(options)
             {

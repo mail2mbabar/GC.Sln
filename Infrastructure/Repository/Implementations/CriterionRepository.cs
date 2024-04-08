@@ -7,7 +7,7 @@ using System;
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class CriterionRepository : ICriterionRepository
+    public class CriterionRepository : ICriterionRepository
         {
             private readonly GcContext _context;
 

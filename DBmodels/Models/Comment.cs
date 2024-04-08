@@ -1,4 +1,6 @@
-﻿namespace DBmodels.Models
+﻿using DBmodels.Models;
+
+namespace DBmodels.Models
 {
     public class Comment
     {

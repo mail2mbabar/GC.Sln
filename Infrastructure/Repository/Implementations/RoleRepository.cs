@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class RoleRepository : IRoleRepository
+    public class RoleRepository : IRoleRepository
         {
             private readonly GcContext _context;
 

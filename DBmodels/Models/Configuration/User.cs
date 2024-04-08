@@ -21,7 +21,7 @@ namespace DBmodels.Models
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public ICollection<Member> Members { get; set; }
-       
+
     }
 
 }
