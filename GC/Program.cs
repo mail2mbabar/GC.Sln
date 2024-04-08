@@ -11,8 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 ServiceModule.Register(services);
+var connectionString = builder.Configuration.GetConnectionString("YourConnectionString");
 services.AddDbContext<GcContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("YourConnectionString")));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 
