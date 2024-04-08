@@ -18,5 +18,6 @@ namespace DBmodels.Models
         public Project Project { get; set; }
         public User User { get; set; }
         public Role Role { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

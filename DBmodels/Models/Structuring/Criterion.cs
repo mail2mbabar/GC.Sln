@@ -10,6 +10,7 @@ namespace DBmodels.Models
 
         [Required]
         public string Name { get; set; }
+        public double Value { get; set; }
 
         // Foreign key property
         public int ProjectId { get; set; }

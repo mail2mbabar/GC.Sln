@@ -20,9 +20,10 @@ namespace DBmodels.Models
         public string Description { get; set; }
 
         // Navigation property for the one-to-many relationship
-        public ICollection<Criterion> Criterias { get; set; }
+        public ICollection<Criterion> Criterions { get; set; }
         public ICollection<Option> Options { get; set; }
         public ICollection<Goal> Goals { get; set; }
         public ICollection<GcAttribute> GcAttributes { get; set; }
+        public ICollection<Member> Members { get; set; }
     }
 }
