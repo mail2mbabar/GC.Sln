@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace DBmodels.Models
 {
-    public class Stage
+    public class Stage : BaseEntity
     {
-        public int StageId { get; set; }
+        public long StageId { get; set; }
         public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

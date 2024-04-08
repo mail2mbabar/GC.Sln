@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace DBmodels.Models
 {
-    public class Member
+    public class Member : BaseEntity
     {
-        public int MemberId { get; set; }
-        public int ProjectId { get; set; }
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
-
+        public Guid MemberId { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid UserId { get; set; }
+        public long RoleId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public Guid CreatedBy { get; set; }
+        public DateTime UpdatededDate { get; set; }
+        public Guid UpdatedBy { get; set; }
         public Project Project { get; set; }
         public User User { get; set; }
         public Role Role { get; set; }

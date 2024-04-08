@@ -1,54 +1,45 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class PreferenceRepository : IPreferenceRepository
+    public class PreferenceRepository : GenericRepository<Preference>, IPreferenceRepository
+    {
+        private readonly GcContext _context;
+
+        public PreferenceRepository(GcContext context) : base(context)
         {
-            private readonly GcContext _context;
+            _context = context;
+        }
+        public async Task<Preference> GetPreferenceByIdAsync(int preferenceId)
+        {
+            return await this.GetById(preferenceId);
+        }
 
-            public PreferenceRepository(GcContext context)
-            {
-                _context = context;
-            }
+        public async Task<List<Preference>> GetAllPreferencesAsync()
+        {
+            return await this.ToListAsync();
+        }
 
-            public async Task<Preference> GetPreferenceByIdAsync(int preferenceId)
-            {
-                return await _context.Preferences.FindAsync(preferenceId);
-            }
+        public async Task AddPreferenceAsync(Preference preference)
+        {
+            await this.Insert(preference);
+        }
 
-            public async Task<List<Preference>> GetAllPreferencesAsync()
-            {
-                return await _context.Preferences.ToListAsync();
-            }
+        public async Task UpdatePreferenceAsync(Preference preference)
+        {
+            await this.Update(preference);
+        }
 
-            public async Task AddPreferenceAsync(Preference preference)
+        public async Task DeletePreferenceAsync(int preferenceId)
+        {
+            var preference = await _context.Preferences.FindAsync(preferenceId);
+            if (preference != null)
             {
-                _context.Preferences.Add(preference);
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task UpdatePreferenceAsync(Preference preference)
-            {
-                _context.Entry(preference).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task DeletePreferenceAsync(int preferenceId)
-            {
-                var preference = await _context.Preferences.FindAsync(preferenceId);
-                if (preference != null)
-                {
-                    _context.Preferences.Remove(preference);
-                    await _context.SaveChangesAsync();
-                }
+                await this.Delete(preference);
             }
         }
     }
+}

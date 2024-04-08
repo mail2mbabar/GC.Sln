@@ -45,7 +45,7 @@ namespace GC.Controllers
             }
 
             [HttpPut("{id}")]
-            public async Task<IActionResult> PutMember(int id, Member member)
+            public async Task<IActionResult> PutMember(Guid id, Member member)
             {
                 if (id != member.MemberId)
                 {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DBmodels.Models
 {
-    public class Option
+    public class Option : BaseEntity
     {
         public int OptionId { get; set; }
         [Required]
@@ -12,7 +12,7 @@ namespace DBmodels.Models
         public double Value { get; set; }
 
         // Foreign key property
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
         // Navigation property
         public Project Project { get; set; }

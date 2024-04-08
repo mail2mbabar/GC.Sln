@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace DBmodels.Models
 {
-    public class Evaluation
+    public class Evaluation : BaseEntity
     {
-        public int EvaluationId { get; set; }
-        public int ProjectId { get; set; }
-        public int MemberId { get; set; }
-        public int OptionId { get; set; }
-        public int CriterionId { get; set; }
+        public long EvaluationId { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid MemberId { get; set; }
+        public long OptionId { get; set; }
+        public long CriterionId { get; set; }
         public double Value { get; set; }
-
+        public DateTime CreatedDate { get; set; }
         public Project Project { get; set; }
         public Member Member { get; set; }
         public Option Option { get; set; }

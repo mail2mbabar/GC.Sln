@@ -1,12 +1,7 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Repository.Implementations
 {

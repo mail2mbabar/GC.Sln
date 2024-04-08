@@ -44,7 +44,7 @@ namespace GC.Controllers
             }
 
             [HttpPut("{id}")]
-            public async Task<IActionResult> PutProject(int id, Project project)
+            public async Task<IActionResult> PutProject(Guid id, Project project)
             {
                 if (id != project.ProjectId)
                 {

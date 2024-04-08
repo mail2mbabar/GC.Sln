@@ -44,7 +44,7 @@ namespace GC.Controllers
             }
 
             [HttpPut("{id}")]
-            public async Task<IActionResult> PutComment(int id, Comment comment)
+            public async Task<IActionResult> PutComment(Guid id, Comment comment)
             {
                 if (id != comment.CommentId)
                 {

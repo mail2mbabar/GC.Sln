@@ -47,7 +47,7 @@ public class UserController : ControllerBase
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(Guid id, User user)
         {
             if (id != user.UserId)
             {

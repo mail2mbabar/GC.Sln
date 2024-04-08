@@ -1,54 +1,45 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
+    {
+        private readonly GcContext _context;
+
+        public UserRepository(GcContext context) : base(context)
         {
-            private readonly GcContext _context;
+            _context = context;
+        }
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await this.GetById(userId);
+        }
 
-            public UserRepository(GcContext context)
-            {
-                _context = context;
-            }
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await this.ToListAsync();
+        }
 
-            public async Task<User> GetUserByIdAsync(int userId)
-            {
-                return await _context.Users.FindAsync(userId);
-            }
+        public async Task AddUserAsync(User user)
+        {
+            await this.Insert(user);
+        }
 
-            public async Task<List<User>> GetAllUsersAsync()
-            {
-                return await _context.Users.ToListAsync();
-            }
+        public async Task UpdateUserAsync(User user)
+        {
+            await this.Update(user);
+        }
 
-            public async Task AddUserAsync(User user)
+        public async Task DeleteUserAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
             {
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task UpdateUserAsync(User user)
-            {
-                _context.Entry(user).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task DeleteUserAsync(int userId)
-            {
-                var user = await _context.Users.FindAsync(userId);
-                if (user != null)
-                {
-                    _context.Users.Remove(user);
-                    await _context.SaveChangesAsync();
-                }
+                await this.Delete(user);
             }
         }
     }
+}

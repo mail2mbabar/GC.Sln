@@ -9,15 +9,19 @@ using DBmodels.Models;
 
 namespace DBmodels.Models
 {
-    public class Project
+    public class Project : BaseEntity
     {
         [Key]
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public Guid CreatedBy { get; set; }
+        public DateTime UpdatededDate { get; set; }
+        public Guid UpdatedBy { get; set; }
 
         // Navigation property for the one-to-many relationship
         public ICollection<Criterion> Criterions { get; set; }

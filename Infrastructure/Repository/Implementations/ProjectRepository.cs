@@ -1,54 +1,45 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Repository.Implementations
 {
-        public class ProjectRepository : IProjectRepository
+    public class ProjectRepository : GenericRepository<Project>, IProjectRepository
+    {
+        private readonly GcContext _context;
+
+        public ProjectRepository(GcContext context) : base(context)
         {
-            private readonly GcContext _context;
+            _context = context;
+        }
+        public async Task<Project> GetProjectByIdAsync(int projectId)
+        {
+            return await this.GetById(projectId);
+        }
 
-            public ProjectRepository(GcContext context)
-            {
-                _context = context;
-            }
+        public async Task<List<Project>> GetAllProjectsAsync()
+        {
+            return await this.ToListAsync();
+        }
 
-            public async Task<Project> GetProjectByIdAsync(int projectId)
-            {
-                return await _context.Projects.FindAsync(projectId);
-            }
+        public async Task AddProjectAsync(Project project)
+        {
+            await this.Insert(project);
+        }
 
-            public async Task<List<Project>> GetAllProjectsAsync()
-            {
-                return await _context.Projects.ToListAsync();
-            }
+        public async Task UpdateProjectAsync(Project project)
+        {
+            await this.Update(project);
+        }
 
-            public async Task AddProjectAsync(Project project)
+        public async Task DeleteProjectAsync(int projectId)
+        {
+            var project = await _context.Projects.FindAsync(projectId);
+            if (project != null)
             {
-                _context.Projects.Add(project);
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task UpdateProjectAsync(Project project)
-            {
-                _context.Entry(project).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task DeleteProjectAsync(int projectId)
-            {
-                var project = await _context.Projects.FindAsync(projectId);
-                if (project != null)
-                {
-                    _context.Projects.Remove(project);
-                    await _context.SaveChangesAsync();
-                }
+                await this.Delete(project);
             }
         }
+    }
 }

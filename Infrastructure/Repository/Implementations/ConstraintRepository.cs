@@ -1,49 +1,45 @@
 ﻿using DBmodels.Configuration;
 using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Infrastructure.Repository.Implementations
 {
-      public class ConstraintRepository : IConstraintRepository
+    public class ConstraintRepository : GenericRepository<Constraint>, IConstraintRepository
+    {
+        private readonly GcContext _context;
+
+        public ConstraintRepository(GcContext context) : base(context)
         {
-            private readonly GcContext _context;
+            _context = context;
+        }
+        public async Task<Constraint> GetConstraintByIdAsync(int constraintId)
+        {
+            return await this.GetById(constraintId);
+        }
 
-            public ConstraintRepository(GcContext context)
-            {
-                _context = context;
-            }
+        public async Task<List<Constraint>> GetAllConstraintsAsync()
+        {
+            return await this.ToListAsync();
+        }
 
-            public async Task<Constraint> GetConstraintByIdAsync(int constraintId)
-            {
-                return await _context.Constraints.FindAsync(constraintId);
-            }
+        public async Task AddConstraintAsync(Constraint constraint)
+        {
+            await this.Insert(constraint);
+        }
 
-            public async Task<List<Constraint>> GetAllConstraintsAsync()
-            {
-                return await _context.Constraints.ToListAsync();
-            }
+        public async Task UpdateConstraintAsync(Constraint constraint)
+        {
+            await this.Update(constraint);
+        }
 
-            public async Task AddConstraintAsync(Constraint constraint)
+        public async Task DeleteConstraintAsync(int constraintId)
+        {
+            var constraint = await _context.Constraints.FindAsync(constraintId);
+            if (constraint != null)
             {
-                _context.Constraints.Add(constraint);
-                await _context.SaveChangesAsync();
+                await this.Delete(constraint);
             }
-
-            public async Task UpdateConstraintAsync(Constraint constraint)
-            {
-                _context.Entry(constraint).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task DeleteConstraintAsync(int constraintId)
-            {
-                var constraint = await _context.Constraints.FindAsync(constraintId);
-                if (constraint != null)
-                {
-                    _context.Constraints.Remove(constraint);
-                    await _context.SaveChangesAsync();
-                }
-            }
-      }
+        }
+    }
 }
