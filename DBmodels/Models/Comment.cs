@@ -2,7 +2,7 @@
 
 namespace DBmodels.Models
 {
-    public class Comment
+    public class Comment : BaseEntity
     {
         public int CommentId { get; set; }
         public int ProjectId { get; set; }

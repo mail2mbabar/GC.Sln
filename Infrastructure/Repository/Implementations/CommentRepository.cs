@@ -10,34 +10,32 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Implementations
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : GenericRepository<Comment>, ICommentRepository
     {
         private readonly GcContext _context;
 
-        public CommentRepository(GcContext context)
+        public CommentRepository(GcContext context) : base(context)
         {
             _context = context;
         }
         public async Task<Comment> GetCommentByIdAsync(int commentId)
         {
-            return await _context.Comments.FindAsync(commentId);
+            return await this.GetById(commentId);
         }
 
         public async Task<List<Comment>> GetAllCommentsAsync()
         {
-            return await _context.Comments.ToListAsync();
+            return await this.ToListAsync();
         }
 
         public async Task AddCommentAsync(Comment comment)
         {
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            await this.Insert(comment);
         }
 
         public async Task UpdateCommentAsync(Comment comment)
         {
-            _context.Entry(comment).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            await this.Update(comment);
         }
 
         public async Task DeleteCommentAsync(int commentId)
@@ -45,8 +43,7 @@ namespace Infrastructure.Repository.Implementations
             var comment = await _context.Comments.FindAsync(commentId);
             if (comment != null)
             {
-                _context.Comments.Remove(comment);
-                await _context.SaveChangesAsync();
+                await this.Delete(comment);
             }
         }
     }
