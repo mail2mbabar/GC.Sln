@@ -8,7 +8,7 @@ namespace DBmodels.Configuration
     {
         public static void Register(IServiceCollection services)
         {
-            // services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IConstraintRepository, ConstraintRepository>();
             services.AddTransient<ICriterionRepository, CriterionRepository>();
