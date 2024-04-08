@@ -16,5 +16,6 @@ namespace DBmodels.Models
 
         // Navigation property
         public Project Project { get; set; }
+        public ICollection<GcAttribute> GcAttributes { get; set; }
     }
 }

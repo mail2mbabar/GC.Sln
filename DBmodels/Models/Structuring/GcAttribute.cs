@@ -12,9 +12,11 @@ namespace DBmodels.Models
 
         // Foreign key property
         public int ProjectId { get; set; }
+        public int CriterionId { get; set; }
 
         // Navigation property
         public Project Project { get; set; }
+        public Criterion Criterion { get; set; }
 
     }
 }
