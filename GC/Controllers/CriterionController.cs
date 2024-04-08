@@ -31,7 +31,7 @@ namespace GC.Controllers
             [HttpGet]
             public async Task<ActionResult<IEnumerable<Criterion>>> GetCriteria()
             {
-                var criteria = await _criterionRepository.GetAllCriteriaAsync();
+                var criteria = await _criterionRepository.GetAllCriterionsAsync();
                 return criteria;
             }
 

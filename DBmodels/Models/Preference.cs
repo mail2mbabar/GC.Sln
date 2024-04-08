@@ -13,7 +13,7 @@ namespace DBmodels.Models
         public int MemberId { get; set; }
         public int CriterionId1 { get; set; }
         public int CriterionId2 { get; set; }
-        public int Value { get; set; }
+        public double Value { get; set; }
 
         public Project Project { get; set; }
         public Member Member { get; set; }
