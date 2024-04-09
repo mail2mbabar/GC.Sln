@@ -11,6 +11,7 @@ namespace DBmodels.Models
     public class Member : BaseEntity
     {
         public Guid MemberId { get; set; }
+        public string MemberName { get; set; }
         public Guid ProjectId { get; set; }
         public Guid UserId { get; set; }
         public long RoleId { get; set; }
