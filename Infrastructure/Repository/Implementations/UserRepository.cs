@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<User> GetUserByIdAsync(Guid userId)
         {
             return await this.GetById(userId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(user);
         }
 
-        public async Task DeleteUserAsync(int userId)
+        public async Task DeleteUserAsync(Guid userId)
         {
             var user = await _context.Users.FindAsync(userId);
             if (user != null)

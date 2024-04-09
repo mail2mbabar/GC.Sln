@@ -28,6 +28,6 @@ namespace DBmodels.Models
         public ICollection<Option> Options { get; set; }
         public ICollection<Goal> Goals { get; set; }
         public ICollection<GcAttribute> GcAttributes { get; set; }
-        public ICollection<Member> Members { get; set; }
+        public ICollection<Group> Members { get; set; }
     }
 }

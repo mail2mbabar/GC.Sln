@@ -1,5 +1,7 @@
 using DBmodels.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Services.Managers.Configuration;
+ // Auto Mapper Configurations
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services; // Define the services variable
@@ -11,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 ServiceModule.Register(services);
+RepositoryServiceModule.Register(services);
 var connectionString = builder.Configuration.GetConnectionString("gcConnectionString");
 services.AddDbContext<GcContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));

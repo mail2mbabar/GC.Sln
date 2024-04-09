@@ -10,10 +10,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IMemberRepository
     {
-        Task<Member> GetMemberByIdAsync(int memberId);
-        Task<List<Member>> GetAllMembersAsync();
-        Task AddMemberAsync(Member member);
-        Task UpdateMemberAsync(Member member);
+        Task<Group> GetMemberByIdAsync(int memberId);
+        Task<List<Group>> GetAllMembersAsync();
+        Task AddMemberAsync(Group member);
+        Task UpdateMemberAsync(Group member);
         Task DeleteMemberAsync(int memberId);
     }
 }

@@ -11,7 +11,7 @@ namespace DBmodels.Models
         public string Text { get; set; }
         public DateTime CreatedDate { get; set; }
         public Project Project { get; set; }
-        public Member Member { get; set; }
+        public Group Member { get; set; }
         public Stage Stage { get; set; }
         public Guid UserId { get; set; }
     }

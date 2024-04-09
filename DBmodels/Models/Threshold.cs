@@ -10,7 +10,7 @@
         public double Value { get; set; }
         public DateTime CreatedDate { get; set; }
         public Project Project { get; set; }
-        public Member Member { get; set; }
+        public Group Member { get; set; }
         public Criterion Criterion { get; set; }
 
     }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DBmodels.Configuration
 {
-    public class ServiceModule
+    public class RepositoryServiceModule
     {
         public static void Register(IServiceCollection services)
         {

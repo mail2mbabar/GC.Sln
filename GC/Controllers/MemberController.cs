@@ -18,7 +18,7 @@ namespace GC.Controllers
             }
 
             [HttpGet("{id}")]
-            public async Task<ActionResult<Member>> GetMember(int id)
+            public async Task<ActionResult<Group>> GetMember(int id)
             {
                 var member = await _memberRepository.GetMemberByIdAsync(id);
 
@@ -31,21 +31,21 @@ namespace GC.Controllers
             }
 
             [HttpGet]
-            public async Task<ActionResult<IEnumerable<Member>>> GetMembers()
+            public async Task<ActionResult<IEnumerable<Group>>> GetMembers()
             {
                 var members = await _memberRepository.GetAllMembersAsync();
                 return members;
             }
 
             [HttpPost]
-            public async Task<ActionResult<Member>> PostMember(Member member)
+            public async Task<ActionResult<Group>> PostMember(Group member)
             {
                 await _memberRepository.AddMemberAsync(member);
                 return CreatedAtAction(nameof(GetMember), new { id = member.MemberId }, member);
             }
 
             [HttpPut("{id}")]
-            public async Task<IActionResult> PutMember(Guid id, Member member)
+            public async Task<IActionResult> PutMember(Guid id, Group member)
             {
                 if (id != member.MemberId)
                 {

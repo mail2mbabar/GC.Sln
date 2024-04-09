@@ -2,7 +2,7 @@
 
 namespace Services.Entities
 {
-    public class MemberEntity
+    public class GroupEntity
     {
         [JsonProperty("MemberId")]
         public Guid MemberId { get; set; }

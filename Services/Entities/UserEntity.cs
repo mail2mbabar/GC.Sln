@@ -21,7 +21,7 @@ namespace Services.Entities
         public string FullName { get; set; }
 
         [JsonProperty("DateOfBirth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [JsonProperty("Address")]
         public string Address { get; set; }
@@ -30,6 +30,9 @@ namespace Services.Entities
         public Guid CreatedBy { get; set; }
 
         [JsonProperty("UpdatedBy")]
-        public Guid UpdatedBy { get; set; }
+        public Guid? UpdatedBy { get; set; }
+
+        [JsonProperty("RoleId")]
+        public long RoleId { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using Infrastructure.Repository.Interfaces;
 
 namespace Infrastructure.Repository.Implementations
 {
-    public class MemberRepository : GenericRepository<Member>, IMemberRepository
+    public class MemberRepository : GenericRepository<Group>, IMemberRepository
     {
         private readonly GcContext _context;
 
@@ -13,22 +13,22 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Member> GetMemberByIdAsync(int memberId)
+        public async Task<Group> GetMemberByIdAsync(int memberId)
         {
             return await this.GetById(memberId);
         }
 
-        public async Task<List<Member>> GetAllMembersAsync()
+        public async Task<List<Group>> GetAllMembersAsync()
         {
             return await this.ToListAsync();
         }
 
-        public async Task AddMemberAsync(Member member)
+        public async Task AddMemberAsync(Group member)
         {
             await this.Insert(member);
         }
 
-        public async Task UpdateMemberAsync(Member member)
+        public async Task UpdateMemberAsync(Group member)
         {
             await this.Update(member);
         }

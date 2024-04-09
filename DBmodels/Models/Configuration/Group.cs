@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace DBmodels.Models
 {
-    public class Member : BaseEntity
+    public class Group : BaseEntity
     {
+        [Key]
         public Guid MemberId { get; set; }
         public string MemberName { get; set; }
         public Guid ProjectId { get; set; }

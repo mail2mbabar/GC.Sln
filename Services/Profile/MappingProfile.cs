@@ -2,7 +2,7 @@
 namespace Services.Profile
 {
     using AutoMapper;
-    using AutoMapper.Execution;
+    using DBmodels.Models;
     using Services.Entities;
     using Services.Models;
 
@@ -10,8 +10,8 @@ namespace Services.Profile
     {
         public MappingProfile()
         {
-            //CreateMap<User, UserEntity>().ReverseMap();
-            //CreateMap<Member, MemberEntity>().ReverseMap();
+            CreateMap<User, UserEntity>().ReverseMap();
+            //CreateMap<Group, GroupEntity>().ReverseMap();
             //CreateMap<Role, RoleEntity>().ReverseMap();
             //CreateMap<Goal, GoalEntity>().ReverseMap();
             //CreateMap<Option, OptionEntity>().ReverseMap();

@@ -1,28 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DBmodels.Configuration;
-
 using System;
 using Infrastructure.Repository.Interfaces;
 using DBmodels.Models;
+using Services.Managers.Interfaces;
+using Services.Entities;
 
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly GcContext _context;
-  
-        private readonly IUserRepository _userRepository;
+    private readonly ILogger<UserController> _logger;
+    private readonly IUserService _userService;
 
-        public UserController(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+    public UserController(IUserService userService, ILogger<UserController> logger)
+    {
+        _userService = userService;
+        _logger = logger;
+    }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserEntity>> GetUser(Guid id)
+    {
+        try
         {
-            var user = await _userRepository.GetUserByIdAsync(id);
+            var user = await _userService.GetUserByIdAsync(id);
 
             if (user == null)
             {
@@ -31,38 +34,71 @@ public class UserController : ControllerBase
 
             return user;
         }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        catch (Exception ex)
         {
-            var users = await _userRepository.GetAllUsersAsync();
-            return users;
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
         }
+    }
 
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserEntity>>> GetUsers()
+    {
+        try
         {
-            await _userRepository.AddUserAsync(user);
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
         }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(Guid id, User user)
+    [HttpPost]
+    public async Task<ActionResult<UserEntity>> AddUser(UserEntity user)
+    {
+        try
+        {
+            var userResponse = await _userService.AddUserAsync(user);
+            return CreatedAtAction(nameof(GetUser), new { id = userResponse.UserId }, user);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(Guid id, UserEntity user)
+    {
+        try
         {
             if (id != user.UserId)
             {
                 return BadRequest();
             }
 
-            await _userRepository.UpdateUserAsync(user);
-            return NoContent();
+            await _userService.UpdateUserAsync(user);
+            return Ok();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        catch (Exception ex)
         {
-            await _userRepository.DeleteUserAsync(id);
-            return NoContent();
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+        try
+        {
+            await _userService.DeleteUserAsync(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+}
 
