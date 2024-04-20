@@ -2,44 +2,44 @@
 using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
 
-
 namespace Infrastructure.Repository.Implementations
 {
-    public class MemberRepository : GenericRepository<Group>, IMemberRepository
+    public class GroupRepository : GenericRepository<Group>, IGroupRepository
     {
         private readonly GcContext _context;
 
-        public MemberRepository(GcContext context) : base(context)
+        public GroupRepository(GcContext context) : base(context)
         {
             _context = context;
         }
-        public async Task<Group> GetMemberByIdAsync(int memberId)
+        public async Task<Group> GetGroupByIdAsync(Guid groupId)
         {
-            return await this.GetById(memberId);
+            return await this.GetById(groupId);
         }
 
-        public async Task<List<Group>> GetAllMembersAsync()
+        public async Task<List<Group>> GetAllGroupsAsync()
         {
             return await this.ToListAsync();
         }
 
-        public async Task AddMemberAsync(Group member)
+        public async Task AddGroupAsync(Group group)
         {
-            await this.Insert(member);
+            await this.Insert(group);
         }
 
-        public async Task UpdateMemberAsync(Group member)
+        public async Task UpdateGroupAsync(Group group)
         {
-            await this.Update(member);
+            await this.Update(group);
         }
 
-        public async Task DeleteMemberAsync(int memberId)
+        public async Task DeleteGroupAsync(Guid groupId)
         {
-            var member = await _context.Members.FindAsync(memberId);
-            if (member != null)
+            var group = await _context.Groups.FindAsync(groupId);
+            if (group != null)
             {
-                await this.Delete(member);
+                await this.Delete(group);
             }
         }
+
     }
 }

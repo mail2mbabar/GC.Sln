@@ -9,10 +9,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IOptionRepository
     {
-        Task<Option> GetOptionByIdAsync(int optionId);
+        Task<Option> GetOptionByIdAsync(long optionId);
         Task<List<Option>> GetAllOptionsAsync();
         Task AddOptionAsync(Option option);
         Task UpdateOptionAsync(Option option);
-        Task DeleteOptionAsync(int optionId);
+        Task DeleteOptionAsync(long optionId);
     }
 }

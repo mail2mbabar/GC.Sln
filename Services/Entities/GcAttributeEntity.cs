@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System;
 
-namespace Services.Models
+namespace Services.Entities
 {
-    public class CriterionEntity
+    public class GcAttributeEntity
     {
-        [JsonProperty("CriterionId")]
-        public long CriterionId { get; set; }
+        [JsonProperty("GcAttributeId")]
+        public long GcAttributeId { get; set; }
 
         [JsonProperty("Name")]
         public string Name { get; set; }
@@ -15,5 +16,8 @@ namespace Services.Models
 
         [JsonProperty("ProjectId")]
         public Guid ProjectId { get; set; }
+
+        [JsonProperty("CriterionId")]
+        public long CriterionId { get; set; }
     }
 }

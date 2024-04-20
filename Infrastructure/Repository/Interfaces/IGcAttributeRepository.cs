@@ -9,10 +9,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IGcAttributeRepository
     {
-        Task<GcAttribute> GetGcAttributeByIdAsync(int gcAttributeId);
+        Task<GcAttribute> GetGcAttributeByIdAsync(long gcAttributeId);
         Task<List<GcAttribute>> GetAllGcAttributesAsync();
         Task AddGcAttributeAsync(GcAttribute gcAttribute);
         Task UpdateGcAttributeAsync(GcAttribute gcAttribute);
-        Task DeleteGcAttributeAsync(int gcAttributeId);
+        Task DeleteGcAttributeAsync(long gcAttributeId);
     }
 }
