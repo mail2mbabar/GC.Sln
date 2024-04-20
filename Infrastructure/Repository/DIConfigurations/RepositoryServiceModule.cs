@@ -13,7 +13,7 @@ namespace DBmodels.Configuration
             services.AddTransient<IConstraintRepository, ConstraintRepository>();
             services.AddTransient<ICriterionRepository, CriterionRepository>();
             services.AddTransient<IEvaluationRepository, EvaluationRepository>();
-            services.AddTransient<IMemberRepository, MemberRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
             services.AddTransient<IOptionRepository, OptionRepository>();
             services.AddTransient<IPreferenceRepository, PreferenceRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();

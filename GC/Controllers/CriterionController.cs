@@ -1,64 +1,101 @@
-﻿using DBmodels.Models;
-using Infrastructure.Repository.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Services.Entities;
+using Services.Managers.Interfaces;
 
-namespace GC.Controllers
+
+[Route("api/[controller]")]
+[ApiController]
+public class CriterionController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CriterionController : ControllerBase
+    private readonly ILogger<CriterionController> _logger;
+    private readonly ICriterionService _criterionService;
+
+    public CriterionController(ICriterionService criterionService, ILogger<CriterionController> logger)
+    {
+        _criterionService = criterionService;
+        _logger = logger;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CriterionEntity>> GetCriterion(long id)
+    {
+        try
         {
-            private readonly ICriterionRepository _criterionRepository;
-
-            public CriterionController(ICriterionRepository criterionRepository)
+            var criterion = await _criterionService.GetCriterionByIdAsync(id);
+            if (criterion == null)
             {
-                _criterionRepository = criterionRepository;
+                return NotFound();
             }
-
-            [HttpGet("{id}")]
-            public async Task<ActionResult<Criterion>> GetCriterion(int id)
-            {
-                var criterion = await _criterionRepository.GetCriterionByIdAsync(id);
-
-                if (criterion == null)
-                {
-                    return NotFound();
-                }
-
-                return criterion;
-            }
-
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<Criterion>>> GetCriteria()
-            {
-                var criteria = await _criterionRepository.GetAllCriterionsAsync();
-                return criteria;
-            }
-
-            [HttpPost]
-            public async Task<ActionResult<Criterion>> PostCriterion(Criterion criterion)
-            {
-                await _criterionRepository.AddCriterionAsync(criterion);
-                return CreatedAtAction(nameof(GetCriterion), new { id = criterion.CriterionId }, criterion);
-            }
-
-            [HttpPut("{id}")]
-            public async Task<IActionResult> PutCriterion(int id, Criterion criterion)
-            {
-                if (id != criterion.CriterionId)
-                {
-                    return BadRequest();
-                }
-
-                await _criterionRepository.UpdateCriterionAsync(criterion);
-                return NoContent();
-            }
-
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeleteCriterion(int id)
-            {
-                await _criterionRepository.DeleteCriterionAsync(id);
-                return NoContent();
-            }
+            return criterion;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while getting the criterion with ID: {id}");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
         }
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CriterionEntity>>> GetCriteria()
+    {
+        try
+        {
+            var criteria = await _criterionService.GetAllCriterionAsync();
+            return Ok(criteria);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while getting all criteria");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<CriterionEntity>> AddCriterion(CriterionEntity criterion)
+    {
+        try
+        {
+            var addedCriterion = await _criterionService.AddCriterionAsync(criterion);
+            return CreatedAtAction(nameof(GetCriterion), new { id = addedCriterion.CriterionId }, addedCriterion);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while adding a criterion");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCriterion(long id, CriterionEntity criterion)
+    {
+        try
+        {
+            if (id != criterion.CriterionId)
+            {
+                return BadRequest();
+            }
+            await _criterionService.UpdateCriterionAsync(criterion);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while updating the criterion with ID: {id}");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCriterion(long id)
+    {
+        try
+        {
+            await _criterionService.DeleteCriterionAsync(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while deleting the criterion with ID: {id}");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+}

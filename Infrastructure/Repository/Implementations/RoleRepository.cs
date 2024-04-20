@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Role> GetRoleByIdAsync(int roleId)
+        public async Task<Role> GetRoleByIdAsync(long roleId)
         {
             return await this.GetById(roleId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(role);
         }
 
-        public async Task DeleteRoleAsync(int roleId)
+        public async Task DeleteRoleAsync(long roleId)
         {
             var role = await _context.Roles.FindAsync(roleId);
             if (role != null)

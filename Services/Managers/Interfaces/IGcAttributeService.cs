@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Managers.Interfaces
 {
-    public interface IMemberService
+    public interface IGcAttributeService
     {
     }
 }

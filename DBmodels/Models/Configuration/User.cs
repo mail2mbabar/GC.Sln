@@ -18,7 +18,8 @@
 
         public long RoleId { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<Group> Members { get; set; }
+        public virtual ICollection<Group> Group { get; set; }
+  
 
     }
 

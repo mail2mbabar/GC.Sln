@@ -2,15 +2,18 @@
 
 namespace Services.Models
 {
-    public class GcAttributeEntity 
+    public class CriterionEntity
     {
-        [JsonProperty("GcAttributeId")]
-        public long GcAttributeId { get; set; }
+        [JsonProperty("CriterionId")]
+        public long CriterionId { get; set; }
 
         [JsonProperty("Name")]
         public string Name { get; set; }
 
         [JsonProperty("Value")]
         public double Value { get; set; }
+
+        [JsonProperty("ProjectId")]
+        public Guid ProjectId { get; set; }
     }
 }

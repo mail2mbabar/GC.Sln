@@ -16,8 +16,8 @@ namespace DBmodels.Models
         public long CriterionId { get; set; }
 
         // Navigation property
-        public Project Project { get; set; }
-        public Criterion Criterion { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual Criterion Criterion { get; set; }
 
     }
 }

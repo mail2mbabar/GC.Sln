@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DBmodels.Models
+﻿namespace DBmodels.Models
 {
+    using System.ComponentModel.DataAnnotations;
     public class Group : BaseEntity
     {
         [Key]
-        public Guid MemberId { get; set; }
-        public string MemberName { get; set; }
+        public Guid GroupId { get; set; }
+        public string GroupName { get; set; }
         public Guid ProjectId { get; set; }
         public Guid UserId { get; set; }
         public long RoleId { get; set; }
@@ -20,9 +13,10 @@ namespace DBmodels.Models
         public Guid CreatedBy { get; set; }
         public DateTime UpdatededDate { get; set; }
         public Guid UpdatedBy { get; set; }
-        public Project Project { get; set; }
-        public User User { get; set; }
-        public Role Role { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual User User { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+ 
     }
 }

@@ -4,11 +4,20 @@ namespace Services.Entities
 {
     public class GroupEntity
     {
-        [JsonProperty("MemberId")]
-        public Guid MemberId { get; set; }
+        [JsonProperty("GroupId")]
+        public Guid GroupId { get; set; }
 
-        [JsonProperty("MemberName")]
-        public string MemberName { get; set; }
+        [JsonProperty("GroupName")]
+        public string GroupName { get; set; }
+
+        [JsonProperty("ProjectId")]
+        public Guid ProjectId { get; set; }
+
+        [JsonProperty("UserId")]
+        public Guid UserId { get; set; }
+
+        [JsonProperty("RoleId")]
+        public long RoleId { get; set; }
 
         [JsonProperty("CreatedBy")]
         public Guid CreatedBy { get; set; }

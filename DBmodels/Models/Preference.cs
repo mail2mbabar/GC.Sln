@@ -10,14 +10,14 @@ namespace DBmodels.Models
     {
         public long PreferenceId { get; set; }
         public long ProjectId { get; set; }
-        public Guid MemberId { get; set; }
+        public Guid GroupId { get; set; }
         public long CriterionId1 { get; set; }
         public long CriterionId2 { get; set; }
         public double Value { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Project Project { get; set; }
-        public Group Member { get; set; }
-        public Criterion Criterion1 { get; set; }
-        public Criterion Criterion2 { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual Group Member { get; set; }
+        public virtual Criterion Criterion1 { get; set; }
+        public virtual Criterion Criterion2 { get; set; }
     }
 }

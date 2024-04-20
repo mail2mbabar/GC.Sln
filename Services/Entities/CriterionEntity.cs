@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace Services.Entities
 {
     public class CriterionEntity
@@ -13,5 +12,8 @@ namespace Services.Entities
 
         [JsonProperty("Value")]
         public double Value { get; set; }
+
+        [JsonProperty("ProjectId")]
+        public Guid ProjectId { get; set; }
     }
 }

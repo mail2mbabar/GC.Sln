@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace Services.Entities
+﻿namespace Services.Entities
 {
-    public class RoleEntity 
+    using Newtonsoft.Json;
+    public class RoleEntity
     {
-        [JsonProperty("RoleId")]
+        [JsonProperty("RoleID")]
         public long RoleId { get; set; }
 
         [JsonProperty("RoleName")]

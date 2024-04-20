@@ -13,6 +13,6 @@ namespace DBmodels.Models
         public string RoleName { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
-        public ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
