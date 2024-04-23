@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Services.Entities
 {
@@ -8,6 +9,7 @@ namespace Services.Entities
         [JsonProperty("OptionId")]
         public int OptionId { get; set; }
 
+        [Required]
         [JsonProperty("Name")]
         public string Name { get; set; }
 
@@ -16,5 +18,6 @@ namespace Services.Entities
 
         [JsonProperty("ProjectId")]
         public Guid ProjectId { get; set; }
+
     }
 }

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Services.Entities;
 
 namespace Services.Managers.Interfaces
 {
     public interface IStageService
     {
+        Task<StageEntity> GetStageByIdAsync(long id);
+        Task<IEnumerable<StageEntity>> GetAllStagesAsync();
+        Task AddStageAsync(StageEntity stage);
+        Task UpdateStageAsync(StageEntity stage);
+        Task DeleteStageAsync(long id);
     }
 }

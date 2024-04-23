@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Option> GetOptionByIdAsync(int optionId)
+        public async Task<Option> GetOptionByIdAsync(long optionId)
         {
             return await this.GetById(optionId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(option);
         }
 
-        public async Task DeleteOptionAsync(int optionId)
+        public async Task DeleteOptionAsync(long optionId)
         {
             var option = await _context.Options.FindAsync(optionId);
             if (option != null)

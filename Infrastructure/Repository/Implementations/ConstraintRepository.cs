@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Constraint> GetConstraintByIdAsync(int constraintId)
+        public async Task<Constraint> GetConstraintByIdAsync(long constraintId)
         {
             return await this.GetById(constraintId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(constraint);
         }
 
-        public async Task DeleteConstraintAsync(int constraintId)
+        public async Task DeleteConstraintAsync(long constraintId)
         {
             var constraint = await _context.Constraints.FindAsync(constraintId);
             if (constraint != null)

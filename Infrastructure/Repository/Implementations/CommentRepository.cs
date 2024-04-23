@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Comment> GetCommentByIdAsync(int commentId)
+        public async Task<Comment> GetCommentByIdAsync(Guid commentId)
         {
             return await this.GetById(commentId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(comment);
         }
 
-        public async Task DeleteCommentAsync(int commentId)
+        public async Task DeleteCommentAsync(Guid commentId)
         {
             var comment = await _context.Comments.FindAsync(commentId);
             if (comment != null)

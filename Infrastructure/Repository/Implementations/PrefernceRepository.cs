@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Preference> GetPreferenceByIdAsync(int preferenceId)
+        public async Task<Preference> GetPreferenceByIdAsync(long preferenceId)
         {
             return await this.GetById(preferenceId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(preference);
         }
 
-        public async Task DeletePreferenceAsync(int preferenceId)
+        public async Task DeletePreferenceAsync(long preferenceId)
         {
             var preference = await _context.Preferences.FindAsync(preferenceId);
             if (preference != null)

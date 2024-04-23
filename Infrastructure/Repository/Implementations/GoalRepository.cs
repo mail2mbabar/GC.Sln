@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Goal> GetGoalByIdAsync(int goalId)
+        public async Task<Goal> GetGoalByIdAsync(long goalId)
         {
             return await this.GetById(goalId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(goal);
         }
 
-        public async Task DeleteGoalAsync(int goalId)
+        public async Task DeleteGoalAsync(long goalId)
         {
             var goal = await _context.Goals.FindAsync(goalId);
             if (goal != null)

@@ -9,10 +9,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface ICommentRepository
     {
-        Task<Comment> GetCommentByIdAsync(int commentId);
+        Task<Comment> GetCommentByIdAsync(Guid commentId);
         Task<List<Comment>> GetAllCommentsAsync();
         Task AddCommentAsync(Comment comment);
         Task UpdateCommentAsync(Comment comment);
-        Task DeleteCommentAsync(int commentId);
+        Task DeleteCommentAsync(Guid commentId);
     }
 }

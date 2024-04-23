@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Threshold> GetThresholdByIdAsync(int thresholdId)
+        public async Task<Threshold> GetThresholdByIdAsync(long thresholdId)
         {
             return await this.GetById(thresholdId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(threshold);
         }
 
-        public async Task DeleteThresholdAsync(int thresholdId)
+        public async Task DeleteThresholdAsync(long thresholdId)
         {
             var threshold = await _context.Thresholds.FindAsync(thresholdId);
             if (threshold != null)

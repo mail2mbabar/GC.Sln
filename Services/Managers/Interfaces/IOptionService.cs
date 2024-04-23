@@ -1,12 +1,6 @@
-﻿using Services.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.Managers.Interfaces
+﻿namespace Services.Managers.Interfaces
 {
+    using Services.Entities;
     public interface IOptionService
     {
         Task<OptionEntity> GetOptionByIdAsync(long optionId);
@@ -14,5 +8,6 @@ namespace Services.Managers.Interfaces
         Task<OptionEntity> AddOptionAsync(OptionEntity option);
         Task<OptionEntity> UpdateOptionAsync(OptionEntity option);
         Task DeleteOptionAsync(long optionId);
+
     }
 }

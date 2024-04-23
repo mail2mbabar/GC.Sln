@@ -1,66 +1,105 @@
-﻿using DBmodels.Models;
-using Infrastructure.Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Services.Entities;
+using Services.Managers.Interfaces;
 
 namespace GC.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class CommentController : ControllerBase
     {
-            private readonly ICommentRepository _commentRepository;
+        private readonly ILogger<CommentController> _logger;
+        private readonly ICommentService _commentService;
 
-            public CommentController(ICommentRepository commentRepository)
+        public CommentController(ICommentService commentService, ILogger<CommentController> logger)
+        {
+            _commentService = commentService;
+            _logger = logger;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CommentEntity>> GetComment(Guid id)
+        {
+            try
             {
-                _commentRepository = commentRepository;
-            }
-
-            [HttpGet("{id}")]
-            public async Task<ActionResult<Comment>> GetComment(int id)
-            {
-                var comment = await _commentRepository.GetCommentByIdAsync(id);
-
+                var comment = await _commentService.GetCommentByIdAsync(id);
                 if (comment == null)
                 {
                     return NotFound();
                 }
-
                 return comment;
             }
-
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
+            catch (Exception ex)
             {
-                var comments = await _commentRepository.GetAllCommentsAsync();
-                return comments;
+                _logger.LogError(ex, $"An error occurred while getting the Comment with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
+        }
 
-            [HttpPost]
-            public async Task<ActionResult<Comment>> PostComment(Comment comment)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CommentEntity>>> GetComments()
+        {
+            try
             {
-                await _commentRepository.AddCommentAsync(comment);
-                return CreatedAtAction(nameof(GetComment), new { id = comment.CommentId }, comment);
+                var comments = await _commentService.GetAllCommentsAsync();
+                return Ok(comments);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all Comments");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
 
-            [HttpPut("{id}")]
-            public async Task<IActionResult> PutComment(Guid id, Comment comment)
+        [HttpPost]
+        public async Task<ActionResult<CommentEntity>> AddComment(CommentEntity comment)
+        {
+            try
+            {
+                var addedComment = await _commentService.AddCommentAsync(comment);
+                return CreatedAtAction(nameof(GetComment), new { id = addedComment.CommentId }, addedComment);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding a Comment");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateComment(Guid id, CommentEntity comment)
+        {
+            try
             {
                 if (id != comment.CommentId)
                 {
                     return BadRequest();
                 }
-
-                await _commentRepository.UpdateCommentAsync(comment);
-                return NoContent();
+                await _commentService.UpdateCommentAsync(comment);
+                return Ok();
             }
-
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeleteComment(int id)
+            catch (Exception ex)
             {
-                await _commentRepository.DeleteCommentAsync(id);
-                return NoContent();
+                _logger.LogError(ex, $"An error occurred while updating the Comment with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
-        
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            try
+            {
+                await _commentService.DeleteCommentAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting the Comment with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
     }
+
 }
