@@ -70,6 +70,7 @@ namespace GC.Controllers
             }
         }
 
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateThreshold(long id, ThresholdEntity threshold)
         {
