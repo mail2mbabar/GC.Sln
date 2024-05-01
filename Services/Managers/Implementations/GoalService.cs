@@ -3,11 +3,6 @@ using DBmodels.Models;
 using Infrastructure.Repository.Interfaces;
 using Services.Entities;
 using Services.Managers.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Managers.Implementations
 {

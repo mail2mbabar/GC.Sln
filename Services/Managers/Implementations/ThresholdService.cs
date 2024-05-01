@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Services.Managers.Implementations
 {
-    public class ThresholdService
+    public class ThresholdService : IThresholdService
     
     {
         private readonly IThresholdRepository _thresholdRepository;

@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<GcAttribute> GetGcAttributeByIdAsync(int gcAttributeId)
+        public async Task<GcAttribute> GetGcAttributeByIdAsync(long gcAttributeId)
         {
             return await this.GetById(gcAttributeId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(gcAttribute);
         }
 
-        public async Task DeleteGcAttributeAsync(int gcAttributeId)
+        public async Task DeleteGcAttributeAsync(long gcAttributeId)
         {
             var gcAttribute = await _context.GcAttributes.FindAsync(gcAttributeId);
             if (gcAttribute != null)

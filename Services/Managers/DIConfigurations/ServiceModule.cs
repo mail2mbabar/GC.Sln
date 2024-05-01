@@ -11,6 +11,19 @@ namespace Services.Managers.Configuration
         public static void Register(IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IConstraintService, ConstraintService>();
+            services.AddTransient<ICriterionService, CriterionService>();
+            services.AddTransient<IEvaluationService, EvaluationService>();
+            services.AddTransient<IGcAttributeService, GcAttributeService>();
+            services.AddTransient<IGoalService, GoalService>();
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IOptionService, OptionService>();
+            services.AddTransient<IPreferenceService, PreferenceService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IStageService, StageService>();
+            services.AddTransient<IThresholdService, ThresholdService>();
+
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());

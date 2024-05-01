@@ -19,6 +19,10 @@ namespace DBmodels.Configuration
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IThresholdRepository, ThresholdRepository>();
+            services.AddTransient<IGoalRepository, GoalRepository>();
+            services.AddTransient<IGcAttributeRepository, GcAttributeRepository>();
+            services.AddTransient<IStageRepository, StageRepository>();
+
         }
     }
 }
