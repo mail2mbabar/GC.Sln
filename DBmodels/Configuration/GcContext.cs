@@ -11,7 +11,7 @@ namespace DBmodels.Configuration
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Member> Members { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Stage> Stages { get; set; }
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Option> Options { get; set; }

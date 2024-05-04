@@ -2,6 +2,8 @@
 using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.Entities;
+using Services.Managers.Interfaces;
 
 namespace GC.Controllers
 {
@@ -9,57 +11,97 @@ namespace GC.Controllers
     [ApiController]
     public class PreferenceController : ControllerBase
     {
-        private readonly IPreferenceRepository _preferenceRepository;
+        private readonly ILogger<PreferenceController> _logger;
+        private readonly IPreferenceService _preferenceService;
 
-        public PreferenceController(IPreferenceRepository preferenceRepository)
+        public PreferenceController(IPreferenceService preferenceService, ILogger<PreferenceController> logger)
         {
-            _preferenceRepository = preferenceRepository;
+            _preferenceService = preferenceService;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Preference>> GetPreference(int id)
+        public async Task<ActionResult<PreferenceEntity>> GetPreference(long id)
         {
-            var preference = await _preferenceRepository.GetPreferenceByIdAsync(id);
-
-            if (preference == null)
+            try
             {
-                return NotFound();
+                var preference = await _preferenceService.GetPreferenceByIdAsync(id);
+                if (preference == null)
+                {
+                    return NotFound();
+                }
+                return preference;
             }
-
-            return preference;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the Preference with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Preference>>> GetPreferences()
+        public async Task<ActionResult<IEnumerable<PreferenceEntity>>> GetPreferences()
         {
-            var preferences = await _preferenceRepository.GetAllPreferencesAsync();
-            return preferences;
+            try
+            {
+                var preferences = await _preferenceService.GetAllPreferencesAsync();
+                return Ok(preferences);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all Preferences");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<Preference>> PostPreference(Preference preference)
+        public async Task<ActionResult<PreferenceEntity>> AddPreference(PreferenceEntity preference)
         {
-            await _preferenceRepository.AddPreferenceAsync(preference);
-            return CreatedAtAction(nameof(GetPreference), new { id = preference.PreferenceId }, preference);
+            try
+            {
+                var addedPreference = await _preferenceService.AddPreferenceAsync(preference);
+                return CreatedAtAction(nameof(GetPreference), new { id = addedPreference.PreferenceId }, addedPreference);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding a Preference");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPreference(int id, Preference preference)
+        public async Task<IActionResult> UpdatePreference(long id, PreferenceEntity preference)
         {
-            if (id != preference.PreferenceId)
+            try
             {
-                return BadRequest();
+                if (id != preference.PreferenceId)
+                {
+                    return BadRequest();
+                }
+                await _preferenceService.UpdatePreferenceAsync(preference);
+                return Ok();
             }
-
-            await _preferenceRepository.UpdatePreferenceAsync(preference);
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating the Preference with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePreference(int id)
+        public async Task<IActionResult> DeletePreference(long id)
         {
-            await _preferenceRepository.DeletePreferenceAsync(id);
-            return NoContent();
+            try
+            {
+                await _preferenceService.DeletePreferenceAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting the Preference with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
     }
+
 }

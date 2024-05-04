@@ -13,14 +13,9 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Criterion> GetCriterionByIdAsync(int criterionId)
+        public async Task<Criterion> GetCriterionByIdAsync(long criterionId)
         {
             return await this.GetById(criterionId);
-        }
-
-        public async Task<List<Criterion>> GetAllCriterionsAsync()
-        {
-            return await this.ToListAsync();
         }
 
         public async Task AddCriterionAsync(Criterion criterion)
@@ -33,7 +28,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(criterion);
         }
 
-        public async Task DeleteCriterionAsync(int criterionId)
+        public async Task DeleteCriterionAsync(long criterionId)
         {
             var criterion = await _context.Criterions.FindAsync(criterionId);
             if (criterion != null)
@@ -41,5 +36,12 @@ namespace Infrastructure.Repository.Implementations
                 await this.Delete(criterion);
             }
         }
+
+        public async Task<List<Criterion>> GetAllCriterionAsync()
+        {
+            return await this.ToListAsync();
+        }
     }
+
 }
+

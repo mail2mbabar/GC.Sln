@@ -2,64 +2,108 @@
 using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.Entities;
+using Services.Managers.Interfaces;
 
 namespace GC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-        public class ThresholdController : ControllerBase
+    public class ThresholdController : ControllerBase
+
+    {
+        private readonly ILogger<ThresholdController> _logger;
+        private readonly IThresholdService _thresholdService;
+
+        public ThresholdController(IThresholdService thresholdService, ILogger<ThresholdController> logger)
         {
-            private readonly IThresholdRepository _thresholdRepository;
+            _thresholdService = thresholdService;
+            _logger = logger;
+        }
 
-            public ThresholdController(IThresholdRepository thresholdRepository)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ThresholdEntity>> GetThreshold(long id)
+        {
+            try
             {
-                _thresholdRepository = thresholdRepository;
-            }
-
-            [HttpGet("{id}")]
-            public async Task<ActionResult<Threshold>> GetThreshold(int id)
-            {
-                var threshold = await _thresholdRepository.GetThresholdByIdAsync(id);
-
+                var threshold = await _thresholdService.GetThresholdByIdAsync(id);
                 if (threshold == null)
                 {
                     return NotFound();
                 }
-
                 return threshold;
             }
-
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<Threshold>>> GetThresholds()
+            catch (Exception ex)
             {
-                var thresholds = await _thresholdRepository.GetAllThresholdsAsync();
-                return thresholds;
+                _logger.LogError(ex, $"An error occurred while getting the Threshold with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
+        }
 
-            [HttpPost]
-            public async Task<ActionResult<Threshold>> PostThreshold(Threshold threshold)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ThresholdEntity>>> GetThresholds()
+        {
+            try
             {
-                await _thresholdRepository.AddThresholdAsync(threshold);
+                var thresholds = await _thresholdService.GetAllThresholdsAsync();
+                return Ok(thresholds);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all Thresholds");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ThresholdEntity>> AddThreshold(ThresholdEntity threshold)
+        {
+            try
+            {
+                await _thresholdService.AddThresholdAsync(threshold);
                 return CreatedAtAction(nameof(GetThreshold), new { id = threshold.ThresholdId }, threshold);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding a Threshold");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
 
-            [HttpPut("{id}")]
-            public async Task<IActionResult> PutThreshold(int id, Threshold threshold)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateThreshold(long id, ThresholdEntity threshold)
+        {
+            try
             {
                 if (id != threshold.ThresholdId)
                 {
                     return BadRequest();
                 }
-
-                await _thresholdRepository.UpdateThresholdAsync(threshold);
-                return NoContent();
+                await _thresholdService.UpdateThresholdAsync(threshold);
+                return Ok();
             }
-
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeleteThreshold(int id)
+            catch (Exception ex)
             {
-                await _thresholdRepository.DeleteThresholdAsync(id);
-                return NoContent();
+                _logger.LogError(ex, $"An error occurred while updating the Threshold with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteThreshold(long id)
+        {
+            try
+            {
+                await _thresholdService.DeleteThresholdAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting the Threshold with ID: {id}");
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
         }
     }
+
+}

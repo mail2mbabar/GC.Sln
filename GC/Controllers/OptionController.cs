@@ -1,66 +1,105 @@
-﻿
-using DBmodels.Models;
-using Infrastructure.Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Services.Entities;
+using Services.Managers.Implementations;
+using Services.Managers.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace GC.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class OptionController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OptionController : ControllerBase
+    private readonly ILogger<OptionController> _logger;
+    private readonly IOptionService _optionService;
+
+    public OptionController(IOptionService optionService, ILogger<OptionController> logger)
     {
-            private readonly IOptionRepository _optionRepository;
+        _optionService = optionService;
+        _logger = logger;
+    }
 
-            public OptionController(IOptionRepository optionRepository)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<OptionEntity>> GetOption(long id)
+    {
+        try
+        {
+            var option = await _optionService.GetOptionByIdAsync(id);
+            if (option == null)
             {
-                _optionRepository = optionRepository;
+                return NotFound();
             }
-
-            [HttpGet("{id}")]
-            public async Task<ActionResult<Option>> GetOption(int id)
-            {
-                var option = await _optionRepository.GetOptionByIdAsync(id);
-
-                if (option == null)
-                {
-                    return NotFound();
-                }
-
-                return option;
-            }
-
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<Option>>> GetOptions()
-            {
-                var options = await _optionRepository.GetAllOptionsAsync();
-                return options;
-            }
-
-            [HttpPost]
-            public async Task<ActionResult<Option>> PostOption(Option option)
-            {
-                await _optionRepository.AddOptionAsync(option);
-                return CreatedAtAction(nameof(GetOption), new { id = option.OptionId }, option);
-            }
-
-            [HttpPut("{id}")]
-            public async Task<IActionResult> PutOption(int id, Option option)
-            {
-                if (id != option.OptionId)
-                {
-                    return BadRequest();
-                }
-
-                await _optionRepository.UpdateOptionAsync(option);
-                return NoContent();
-            }
-
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeleteOption(int id)
-            {
-                await _optionRepository.DeleteOptionAsync(id);
-                return NoContent();
-            }
+            return option;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while getting the Option with ID: {id}");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
         }
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<OptionEntity>>> GetOptions()
+    {
+        try
+        {
+            var options = await _optionService.GetAllOptionsAsync();
+            return Ok(options);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while getting all Options");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<OptionEntity>> AddOption(OptionEntity option)
+    {
+        try
+        {
+            var addedOption = await _optionService.AddOptionAsync(option);
+            return CreatedAtAction(nameof(GetOption), new { id = addedOption.OptionId }, addedOption);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while adding a option");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateOption(long id, OptionEntity option)
+    {
+        try
+        {
+            if (id != option.OptionId)
+            {
+                return BadRequest();
+            }
+            await _optionService.UpdateOptionAsync(option);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while updating the option with ID: {id}");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteOption(long id)
+    {
+        try
+        {
+            await _optionService.DeleteOptionAsync(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while deleting the option with ID: {id}");
+            return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+        }
+    }
+}
+

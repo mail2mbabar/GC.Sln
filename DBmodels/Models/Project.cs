@@ -24,10 +24,10 @@ namespace DBmodels.Models
         public Guid UpdatedBy { get; set; }
 
         // Navigation property for the one-to-many relationship
-        public ICollection<Criterion> Criterions { get; set; }
-        public ICollection<Option> Options { get; set; }
-        public ICollection<Goal> Goals { get; set; }
-        public ICollection<GcAttribute> GcAttributes { get; set; }
-        public ICollection<Member> Members { get; set; }
+        public virtual ICollection<Criterion> Criterions { get; set; }
+        public virtual ICollection<Option> Options { get; set; }
+        public virtual ICollection<Goal> Goals { get; set; }
+        public virtual ICollection<GcAttribute> GcAttributes { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

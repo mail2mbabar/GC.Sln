@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Stage> GetStageByIdAsync(int stageId)
+        public async Task<Stage> GetStageByIdAsync(long stageId)
         {
             return await this.GetById(stageId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(stage);
         }
 
-        public async Task DeleteStageAsync(int stageId)
+        public async Task DeleteStageAsync(long stageId)
         {
             var stage = await _context.Stages.FindAsync(stageId);
             if (stage != null)

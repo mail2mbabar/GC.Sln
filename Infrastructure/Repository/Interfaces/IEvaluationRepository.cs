@@ -9,10 +9,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IEvaluationRepository
     {
-        Task<Evaluation> GetEvaluationByIdAsync(int evaluationId);
+        Task<Evaluation> GetEvaluationByIdAsync(long evaluationId);
         Task<List<Evaluation>> GetAllEvaluationsAsync();
         Task AddEvaluationAsync(Evaluation evaluation);
         Task UpdateEvaluationAsync(Evaluation evaluation);
-        Task DeleteEvaluationAsync(int evaluationId);
+        Task DeleteEvaluationAsync(long evaluationId);
     }
 }

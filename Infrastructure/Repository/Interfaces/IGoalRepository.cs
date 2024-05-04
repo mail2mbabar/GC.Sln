@@ -9,10 +9,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IGoalRepository
     {
-        Task<Goal> GetGoalByIdAsync(int goalId);
+        Task<Goal> GetGoalByIdAsync(long goalId);
         Task<List<Goal>> GetAllGoalsAsync();
         Task AddGoalAsync(Goal goal);
         Task UpdateGoalAsync(Goal goal);
-        Task DeleteGoalAsync(int goalId);
+        Task DeleteGoalAsync(long goalId);
     }
 }

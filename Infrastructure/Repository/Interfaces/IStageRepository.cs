@@ -9,10 +9,10 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IStageRepository
     {
-        Task<Stage> GetStageByIdAsync(int stageId);
+        Task<Stage> GetStageByIdAsync(long stageId);
         Task<List<Stage>> GetAllStagesAsync();
         Task AddStageAsync(Stage stage);
         Task UpdateStageAsync(Stage stage);
-        Task DeleteStageAsync(int stageId);
+        Task DeleteStageAsync(long stageId);
     }
 }

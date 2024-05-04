@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Project> GetProjectByIdAsync(int projectId)
+        public async Task<Project> GetProjectByIdAsync(Guid projectId)
         {
             return await this.GetById(projectId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(project);
         }
 
-        public async Task DeleteProjectAsync(int projectId)
+        public async Task DeleteProjectAsync(Guid projectId)
         {
             var project = await _context.Projects.FindAsync(projectId);
             if (project != null)

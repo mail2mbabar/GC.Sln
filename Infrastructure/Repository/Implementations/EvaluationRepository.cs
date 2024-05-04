@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<Evaluation> GetEvaluationByIdAsync(int evaluationId)
+        public async Task<Evaluation> GetEvaluationByIdAsync(long evaluationId)
         {
             return await this.GetById(evaluationId);
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository.Implementations
             await this.Update(evaluation);
         }
 
-        public async Task DeleteEvaluationAsync(int evaluationId)
+        public async Task DeleteEvaluationAsync(long evaluationId)
         {
             var evaluation = await _context.Evaluations.FindAsync(evaluationId);
             if (evaluation != null)

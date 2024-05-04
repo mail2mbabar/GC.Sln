@@ -16,7 +16,7 @@ namespace DBmodels.Models
         public Guid ProjectId { get; set; }
 
         // Navigation property
-        public Project Project { get; set; }
-        public ICollection<GcAttribute> GcAttributes { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual ICollection<GcAttribute> GcAttributes { get; set; }
     }
 }
