@@ -11,6 +11,7 @@ namespace Services.Managers.Configuration
         public static void Register(IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IConstraintService, ConstraintService>();
             services.AddTransient<ICriterionService, CriterionService>();

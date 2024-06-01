@@ -1,11 +1,11 @@
-﻿namespace Services.Managers.Implementations
+﻿using Services.Entities;
+using Services.Managers.Interfaces;
+namespace Services.Managers.Implementations
 {
 
     using AutoMapper;
     using DBmodels.Models;
     using Infrastructure.Repository.Interfaces;
-    using Services.Entities;
-    using Services.Managers.Interfaces;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

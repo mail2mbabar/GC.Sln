@@ -6,6 +6,7 @@ using Infrastructure.Repository.Interfaces;
 using DBmodels.Models;
 using Services.Managers.Interfaces;
 using Services.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -18,6 +19,31 @@ public class UserController : ControllerBase
     {
         _userService = userService;
         _logger = logger;
+    }
+
+    [AllowAnonymous]
+    [HttpPost("authenticate/{id}")]
+    public async Task<IActionResult> Authenticate(Guid id)
+    {
+        try
+        {
+            var userResponse = await this._userService.AuthenticateUserAsync(id);
+
+            if (userResponse is null || (userResponse is not null && string.IsNullOrWhiteSpace(userResponse.Token)))
+            {
+                this._logger.LogInformation($"User Not Authenticated");
+                return Unauthorized();
+            }
+
+            this._logger.LogInformation($"User Authenticated SuccessFully with Token : ${userResponse.Token}");
+
+            return Ok(userResponse);
+        }
+        catch (Exception)
+        {
+            this._logger.LogInformation($"User Not Authenticated: Exception");
+            return BadRequest();
+        }
     }
 
     [HttpGet("{id}")]

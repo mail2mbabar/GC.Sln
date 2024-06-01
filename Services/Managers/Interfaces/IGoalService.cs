@@ -1,6 +1,7 @@
-﻿namespace Services.Managers.Interfaces
+﻿using Services.Entities;
+
+namespace Services.Managers.Interfaces
 {
-    using Services.Entities;
     public interface IGoalService
     {
         Task<GoalEntity> GetGoalByIdAsync(long id);

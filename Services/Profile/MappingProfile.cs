@@ -3,8 +3,8 @@ namespace Services.Profile
 {
     using AutoMapper;
     using DBmodels.Models;
-    using Services.DTOs;
-    using Services.Entities;
+    using global::Services.DTOs;
+    using global::Services.Entities;
 
     public class MappingProfile : Profile
     {

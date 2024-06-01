@@ -2,17 +2,34 @@
 {
     using AutoMapper;
     using DBmodels.Models;
+    using global::Services.DTOs;
+    using global::Services.Entities;
+    using global::Services.Managers.Interfaces;
     using Infrastructure.Repository.Interfaces;
-    using Services.Entities;
-    using Services.Managers.Interfaces;
     public class UserService : IUserService
     {
+        private readonly ITokenService _tokenService;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(ITokenService tokenService, IUserRepository userRepository, IMapper mapper)
         {
+            _tokenService = tokenService;
             _userRepository = userRepository;
             _mapper = mapper;
+        }
+        public async Task<UserResponseDTO> AuthenticateUserAsync(Guid userId)
+        {
+            if (userId == Guid.Empty)
+            {
+                return new UserResponseDTO();
+            }
+
+            var authenticatedUser = await AuthenticatedUser(userId);
+
+            if (authenticatedUser is null || authenticatedUser.UserId == Guid.Empty)
+                return new UserResponseDTO();
+
+            return await GetUserResponse(authenticatedUser);
         }
         public async Task<UserEntity> GetUserByIdAsync(Guid id)
         {
@@ -48,5 +65,26 @@
         {
             await _userRepository.DeleteUserAsync(id);
         }
+
+        #region private Methods
+
+        private async Task<UserEntity> AuthenticatedUser(Guid userId)
+        {
+            var dbUser = await _userRepository.GetUserByIdAsync(userId);
+            var userEntity = _mapper.Map<UserEntity>(dbUser);
+
+            return userEntity;
+        }
+
+        private async Task<UserResponseDTO> GetUserResponse(UserEntity user)
+        {
+            return new UserResponseDTO()
+            {
+                FullName = user.FullName,
+                Token = await this._tokenService.GetTokenAsync(user)
+            };
+        }
+
+        #endregion
     }
 }
