@@ -24,5 +24,6 @@ namespace Services.Entities
 
         [JsonProperty("UpdatedBy")]
         public Guid UpdatedBy { get; set; }
+
     }
 }
