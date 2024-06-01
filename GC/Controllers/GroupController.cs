@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.Entities;
+using Services.DTOs;
 using Services.Managers.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Services.Entities;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -16,7 +21,7 @@ public class GroupController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<GroupEntity>> GetGroup(Guid id)
+    public async Task<ActionResult<GroupResponseDto>> GetGroup(Guid id)
     {
         try
         {
@@ -25,7 +30,7 @@ public class GroupController : ControllerBase
             {
                 return NotFound();
             }
-            return group;
+            return Ok(group);
         }
         catch (Exception ex)
         {
@@ -35,7 +40,7 @@ public class GroupController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GroupEntity>>> GetGroups()
+    public async Task<ActionResult<IEnumerable<GroupResponseDto>>> GetGroups()
     {
         try
         {

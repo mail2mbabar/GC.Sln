@@ -3,6 +3,7 @@ namespace Services.Profile
 {
     using AutoMapper;
     using DBmodels.Models;
+    using Services.DTOs;
     using Services.Entities;
 
     public class MappingProfile : Profile
@@ -10,7 +11,7 @@ namespace Services.Profile
         public MappingProfile()
         {
             CreateMap<User, UserEntity>().ReverseMap();
-            CreateMap<Group, GroupEntity>().ReverseMap();
+      
             CreateMap<Role, RoleEntity>().ReverseMap();
             CreateMap<Goal, GoalEntity>().ReverseMap();
             CreateMap<Option, OptionEntity>().ReverseMap();
@@ -23,6 +24,12 @@ namespace Services.Profile
             CreateMap<GcAttribute, GcAttributeEntity>().ReverseMap();
             CreateMap<Threshold, ThresholdEntity>().ReverseMap();
             CreateMap<Evaluation, EvaluationEntity>().ReverseMap();
+
+            CreateMap<Group, GroupResponseDto>()
+       .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Project.Name))
+       .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
+       .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.RoleName));
         }
     }
 }
+  
