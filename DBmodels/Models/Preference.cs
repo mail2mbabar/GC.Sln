@@ -9,7 +9,7 @@ namespace DBmodels.Models
     public class Preference : BaseEntity
     {
         public long PreferenceId { get; set; }
-        public long ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
         public Guid GroupId { get; set; }
         public long CriterionId1 { get; set; }
         public long CriterionId2 { get; set; }

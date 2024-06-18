@@ -20,7 +20,7 @@ namespace DBmodels.Models
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public Guid CreatedBy { get; set; }
-        public DateTime UpdatededDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
         public Guid UpdatedBy { get; set; }
 
         // Navigation property for the one-to-many relationship

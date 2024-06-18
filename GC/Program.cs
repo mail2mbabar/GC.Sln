@@ -1,3 +1,4 @@
+using DBmodels;
 using DBmodels.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -88,5 +89,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<GcContext>();
+    DataSeeder.Initialize(context);
+}
 
 app.Run();
