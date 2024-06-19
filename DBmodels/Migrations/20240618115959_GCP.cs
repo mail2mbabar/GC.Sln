@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBmodels.Migrations
 {
     /// <inheritdoc />
-    public partial class DatabaseCreation : Migration
+    public partial class GCP : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,7 @@ namespace DBmodels.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UpdatededDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
@@ -365,13 +365,12 @@ namespace DBmodels.Migrations
                 {
                     PreferenceId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProjectId = table.Column<long>(type: "bigint", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     GroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CriterionId1 = table.Column<long>(type: "bigint", nullable: false),
                     CriterionId2 = table.Column<long>(type: "bigint", nullable: false),
                     Value = table.Column<double>(type: "double", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ProjectId1 = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Criterion1CriterionId = table.Column<long>(type: "bigint", nullable: false),
                     Criterion2CriterionId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -397,8 +396,8 @@ namespace DBmodels.Migrations
                         principalColumn: "GroupId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Preferences_Projects_ProjectId1",
-                        column: x => x.ProjectId1,
+                        name: "FK_Preferences_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
@@ -549,9 +548,9 @@ namespace DBmodels.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Preferences_ProjectId1",
+                name: "IX_Preferences_ProjectId",
                 table: "Preferences",
-                column: "ProjectId1");
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Thresholds_CriterionId",
