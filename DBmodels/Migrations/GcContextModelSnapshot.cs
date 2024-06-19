@@ -17,7 +17,7 @@ namespace DBmodels.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -310,10 +310,7 @@ namespace DBmodels.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("char(36)");
 
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("ProjectId1")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("char(36)");
 
                     b.Property<double>("Value")
@@ -327,7 +324,7 @@ namespace DBmodels.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("ProjectId1");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Preferences");
                 });
@@ -355,7 +352,7 @@ namespace DBmodels.Migrations
                     b.Property<Guid>("UpdatedBy")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("UpdatededDate")
+                    b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("ProjectId");
@@ -681,7 +678,7 @@ namespace DBmodels.Migrations
 
                     b.HasOne("DBmodels.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId1")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -76,6 +76,13 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<GcContext>();
+    DataSeeder.Initialize(context);
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -89,12 +96,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// Seed the database
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<GcContext>();
-    DataSeeder.Initialize(context);
-}
 
 app.Run();
